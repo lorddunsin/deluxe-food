@@ -127,7 +127,7 @@ function FoodShop() {
       </button>
       <section className="grid  items-center grid-cols-4 content-center justify-center justify-items-center justify-self-center self-center gap-5">
         {foods.map((food) => (
-          <div className=" w-70 rounded-lg shadow-md flex flex-col   overflow-hidden mb-10  cursor-pointer">
+          <div key={food.name} className=" w-70 rounded-lg shadow-md flex flex-col   overflow-hidden mb-10  cursor-pointer">
             <div className="w-70 h-30">{food.image}</div>
             <div className="bg-white mt-10 flex items-center font-bold justify-between p-3">
               <p className="text-red-500  text-lg">{food.name}</p>

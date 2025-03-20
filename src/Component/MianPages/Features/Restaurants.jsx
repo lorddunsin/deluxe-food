@@ -19,6 +19,7 @@ import { GrNext } from "react-icons/gr";
 import Slider from "react-slick";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../utils/constants";
 
 const allRestaurants = [
   {
@@ -213,6 +214,24 @@ const foods = [
 function Restaurants() {
   const navigator = useNavigate();
   // const [photos, setPhotos] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+
+  const fetchRestaurants = () => {
+    console.log("Loading restaurants");
+    axios
+      .get(`${API_BASE_URL}/deluxefood/get-all-vendor`)
+      .then((res) => {
+        console.log("RESPONSE ====>>>>", res);
+        setRestaurants(res.data.vendors);
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+      });
+  };
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+  console.log(restaurants);
 
   return (
     <>
@@ -224,7 +243,10 @@ function Restaurants() {
 
           {allRestaurants.map((rest) =>
             rest.p ? (
-              <button className="bg-red-300 cursor-pointer rounded-lg px-5 text-lg text-red-800 hover:bg-red-400 hover:text-white font-500">
+              <button
+                key={rest.id}
+                className="bg-red-300 cursor-pointer rounded-lg px-5 text-lg text-red-800 hover:bg-red-400 hover:text-white font-500"
+              >
                 {rest.Category}
               </button>
             ) : (
@@ -234,27 +256,26 @@ function Restaurants() {
         </ul>
 
         <section className="flex gap-10 relative">
-          {allRestaurants.map(
-            (rest) =>
-              rest.Rating > 3.5 && (
-                <div
-                  onClick={() => navigator("/foodshop")}
-                  className=" min-w-65 rounded-lg shadow-md flex flex-col  overflow-hidden mb-10 hover:text-xl  hover:font-bold  hover:scale-x-[1.1] hover:shadow-2xl ease-in duration-[100ms] cursor-pointer"
-                >
-                  <div className="flex h-50 ">{rest.image}</div>
-                  <div className="p-4">
-                    <p className="text-red-500 font-bold text-lg">
-                      {rest.name}
-                    </p>
-                    <p>{rest.Category}</p>
-                    <div className="flex justify-between mt-2 ">
-                      <p>{rest.Rating}★</p>
-                      <p>{rest.time} min</p>
-                    </div>
-                  </div>
+          {restaurants.map((rest) => (
+            <div
+              key={rest._id}
+              onClick={() => navigator("/foodshop")}
+              className=" min-w-65 rounded-lg shadow-md flex flex-col  overflow-hidden mb-10 hover:text-xl  hover:font-bold  hover:scale-x-[1.1] hover:shadow-2xl ease-in duration-[100ms] cursor-pointer"
+            >
+              <div className="flex h-50 ">{rest.picture}</div>
+              <div className="p-4">
+                <p className="text-red-500 font-bold text-lg">
+                  {rest.companyName}
+                </p>
+                <p>{rest.preference[0]}</p>
+                <div className="flex justify-between mt-2 ">
+                  <p>{rest.Rating}★</p>
+                  <p>{rest.time} min</p>
                 </div>
-              )
-          )}
+                <p>{rest.address}</p>
+              </div>
+            </div>
+          ))}
         </section>
         <h1 className=" font-bold text-xl my-13">Popular Meals</h1>
         <section className="flex gap-10 p-10 rounded-lg relative  bg-gray-100">

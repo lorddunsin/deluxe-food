@@ -9,7 +9,7 @@ import TopSect from "./Features/TopSect";
 function LandingPage() {
   
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col w-full">
       <Navbar name="Sign up" />
       <TopSect />
       <main className="max-w-280 flex self-center  flex-col overflow-hidden ">

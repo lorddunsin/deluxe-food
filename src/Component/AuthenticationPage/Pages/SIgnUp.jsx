@@ -8,6 +8,9 @@ function SIgnUp() {
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+   const [loginErr, setLoginErr] = useState({
+    invalidCred: "",
+  });
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -90,6 +93,10 @@ function SIgnUp() {
           console.log("This is the error message", err.response.data.message);
           console.log("Error submitting form");
           console.log(err);
+           setLoginErr((prev) => ({
+            ...prev,
+            invalidCred: `${err.response.data.message}`,
+          }));
         });
     }
     // onClick={() => navigate("/")}
@@ -102,6 +109,11 @@ function SIgnUp() {
           <FcGoogle size={25} className="mr-5" />
           Sign in with Google
         </button>
+         {loginErr.invalidCred && (
+          <span className=" bg-red-500 text-white text-md mt-[-5px] rounded-lg text-center p-2 mb-4">
+            {loginErr.invalidCred}
+          </span>
+        )}
         Username
         <input
           type="text"

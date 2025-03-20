@@ -6,10 +6,10 @@ function Navbar(props) {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-  const changeState = (e) => {
-    e.preventDefault();
-    localStorage.setItem("isLoggedIn", false);
-  };
+  // const changeState = (e) => {
+  //   e.preventDefault();
+  //   localStorage.setItem("isLoggedIn", false);
+  // };
   // const isLoggedIn = false;
   return (
     <nav className="px-25 py-9 font-bold flex justify-center items-center content-center justify-items-center  text-white w-full bg-red-700">
@@ -53,7 +53,7 @@ function Navbar(props) {
           {isLoggedIn && (
             <button
               onClick={() => {
-                changeState;
+                // changeState;
                 navigate("/setting");
               }}
               className=" hover:cursor-pointer hover:bg-red-500 p-1 rounded-2xl font-bold text-2xl "

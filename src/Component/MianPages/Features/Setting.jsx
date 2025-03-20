@@ -15,7 +15,11 @@ function Setting() {
 
         <div className="flex justify-between gap-30">
           <button
-            onClick={() => navigate("/auth/login")}
+          
+            onClick={() => {
+              navigate("/auth/login")
+              localStorage.removeItem("isLoggedIn");
+            }}
             className="flex self-center text-white underline px-2 hover:cursor-pointer rounded-lg content-center"
           >
             Logout

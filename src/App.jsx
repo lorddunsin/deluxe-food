@@ -14,6 +14,8 @@ import Privacy from "./Component/MianPages/Features/SettingFeatures/Privacy";
 import FoodShop from "./Component/MianPages/FoodShop";
 import LandingPage from "./Component/MianPages/LandingPage";
 import { Route, Routes } from "react-router-dom";
+import ProtectedRout from "./Component/ProtectedRout";
+import EmailNotification from "./Component/AuthenticationPage/Pages/EmailNotification";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -29,9 +31,17 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SIgnUp />} />
           <Route path="forget-password" element={<ForgetPassowrd />} />
+          <Route path="email-note" element={<EmailNotification />} />
           <Route path="reset-password" element={<ResetPassword />} />
         </Route>
-        <Route path="/setting" element={<Setting />}>
+        <Route
+          path="/setting"
+          element={
+            <ProtectedRout>
+              <Setting />
+            </ProtectedRout>
+          }
+        >
           <Route path="history" element={<History />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="change-password" element={<ChangePassword />} />

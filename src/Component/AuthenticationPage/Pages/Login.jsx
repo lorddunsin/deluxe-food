@@ -26,7 +26,6 @@ function Login() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("isLoggedIn", true);
     setLoading(true);
     if (!form.email) {
       setLoading(false);
@@ -47,12 +46,15 @@ function Login() {
         .post("https://deluxefood.onrender.com/api/deluxefood/login-user", form)
         .then((res) => {
           console.log("success");
+          localStorage.setItem("isLoggedIn", true);
           console.log("This is the response", res);
           navigate("/");
           setLoading(false);
         })
         .catch((err) => {
           console.log("fail");
+          localStorage.removeItem("isLoggedIn");
+
           console.log(err.response.data.message);
           setLoading(false);
           setLoginErr((prev) => ({
@@ -112,7 +114,7 @@ function Login() {
         <button
           // onClick={() => navigate("/")}
           className="w-100 p-2 hover:cursor-pointer bg-gradient-to-r from-red-700 via-red-500 to-red-700 my-5 rounded-lg text-white"
-        > 
+        >
           {loading ? <BeatLoader /> : "Login"}
         </button>
       </form>
