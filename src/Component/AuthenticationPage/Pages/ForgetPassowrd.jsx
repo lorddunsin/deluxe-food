@@ -54,13 +54,13 @@ function ForgetPassowrd() {
   };
 
   return (
-    <div>
-      <h1 className="font-bold text-xl text-center ">Forgot Password?</h1>
+    <div className="px-10">
+      <h1 className="font-bold text-xl text-center  ">Forgot Password?</h1>
       <p className="text-center mt-3 mb-8">
         We will send reset instruction to you email.
       </p>
       <form
-        className="flex  flex-col self-center text-base "
+        className="flex  flex-col self-center text-base  items-center"
         onSubmit={handleSubmit}
       >
         {loginErr.invalidEmail && (
@@ -68,17 +68,17 @@ function ForgetPassowrd() {
             {loginErr.invalidEmail}
           </span>
         )}
-        Email
+        <label className="self-start mb-1">Email</label>
         <input
           type="text"
           placeholder="Email"
-          className="border-1 w-100 border-red-200 p-2 rounded-lg mt-2"
+          className="border-1 w-60 sm:w-70 md:w-80 lg:w-100 border-red-200 p-2 rounded-lg mt-2"
           onChange={handleForm}
           value={form.email}
           name="email"
         />
         <span className="text-red-500 text-sm mt-2 mb-4">{error.emailErr}</span>
-        <button className="w-100 p-2 bg-gradient-to-r from-red-700 via-red-500 to-red-700 text-white my-5 rounded-lg">
+        <button className="w-60 sm:w-70 md:w-80 lg:w-100 p-2 bg-gradient-to-r from-red-700 via-red-500 to-red-700 text-white my-5 rounded-lg">
           {loading ? <BeatLoader /> : "Varify Email"}
         </button>
       </form>

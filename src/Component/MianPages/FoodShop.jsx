@@ -1,142 +1,271 @@
-import React from "react";
+// import React, { useEffect, useState } from "react";
+// import Navbar from "./Navbar";
+// import TopSect from "./Features/TopSect";
+// import Footer from "./Features/Footer";
+// import { FaOpencart } from "react-icons/fa";
+// import { IoCartOutline } from "react-icons/io5";
+// import { useNavigate, useSearchParams } from "react-router-dom";
+// import axios from "axios";
+// import { API_BASE_URL } from "../../utils/constants";
+// import { MoonLoader } from "react-spinners";
+
+// function FoodShop() {
+//   const [searchParams] = useSearchParams();
+//   const navigate = useNavigate();
+//   const companyName = searchParams.get("id");
+
+//   const [foods, setFoods] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [vendor, setVendor] = useState({});
+//   const [cart, setCart] = useState(() => {
+//     // Load cart from localStorage on initial render
+//     const savedCart = localStorage.getItem("cart");
+//     return savedCart ? JSON.parse(savedCart) : [];
+//   });
+
+//   const fetchRestaurantMeals = () => {
+//     setLoading(true);
+//     axios
+//       .get(
+//         `${API_BASE_URL}/deluxefood/get-vendor-by-name?companyName=${companyName}`
+//       )
+//       .then((res) => {
+//         setVendor(res.data.vendor);
+//         setFoods(res.data.foods);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         console.error("An error occurred:", err);
+//         setLoading(false);
+//       });
+//   };
+
+//   useEffect(() => {
+//     fetchRestaurantMeals();
+//   }, []);
+
+//   const addToCart = (foodItem) => {
+//     const updatedCart = [...cart];
+//     const existingItem = updatedCart.find(
+//       (item) => item.name === foodItem.name
+//     );
+
+//     if (existingItem) {
+//       existingItem.quantity += 1;
+//     } else {
+//       updatedCart.push({ ...foodItem, quantity: 1 });
+//     }
+
+//     setCart(updatedCart);
+//     localStorage.setItem("cart", JSON.stringify(updatedCart));
+//   };
+
+//   return (
+//     <div className="overflow-hidden">
+//       <Navbar />
+
+//       {/* Go to Cart Button */}
+//       <button
+//         onClick={() => navigate("/cart")}
+//         className="fixed right-4 top-[70px] bg-red-700 rounded-lg p-2 flex items-center gap-2 text-lg text-white z-50 shadow-md"
+//       >
+//         <FaOpencart />
+//         <span className="text-sm">{cart.length}</span>
+//       </button>
+
+//       {/* Top Section */}
+//       <TopSect header={vendor.companyName} subheader={vendor.preference} />
+
+//       {/* Foods Grid */}
+//       <section className="grid mt-10 items-center grid-cols-4 gap-5 px-6 min-h-[73vh]">
+//         {loading && (
+//           <div className="col-span-4 w-full flex flex-col items-center justify-center text-red-500">
+//             <MoonLoader />
+//             <p className="mt-4 text-center">
+//               Loading foods, this will only take a few seconds...
+//             </p>
+//           </div>
+//         )}
+
+//         {!loading && foods.length === 0 ? (
+//           <div className="col-span-4 text-red-500 font-bold text-4xl text-center">
+//             Sorry! No food available in this restaurant at the moment
+//           </div>
+//         ) : (
+//           foods.map((food) => (
+//             <div
+//               key={food.name}
+//               className="group w-full max-w-xs rounded-lg shadow-md overflow-hidden mb-10 cursor-pointer bg-white"
+//             >
+//               <div className="relative h-40">
+//                 {/* Image */}
+//                 <img
+//                   src={food.picture}
+//                   alt={food.name}
+//                   className="w-full h-full object-cover rounded-t-lg"
+//                 />
+
+//                 {/* Overlay */}
+//                 <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-40 transition-opacity duration-500 z-10 rounded-t-lg" />
+
+//                 {/* Button */}
+//                 <button
+//                   onClick={() => addToCart(food)}
+//                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-lg flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20"
+//                 >
+//                   Add to Cart <IoCartOutline className="ml-2 text-xl" />
+//                 </button>
+//               </div>
+
+//               {/* Name and Price */}
+//               <div className="flex justify-between items-center p-3 font-bold">
+//                 <p className="text-red-500 truncate">{food.name}</p>
+//                 <p>₦{food.price}</p>
+//               </div>
+//             </div>
+//           ))
+//         )}
+//       </section>
+
+//       {/* Footer */}
+//       <Footer email={vendor.email} location={vendor.address} />
+//     </div>
+//   );
+// }
+
+// export default FoodShop;
+
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import TopSect from "./Features/TopSect";
-import FastOne from "./Features/Images/fast1.jpeg";
-import FastTwo from "./Features/Images/fast2.jpg";
-import FastThree from "./Features/Images/fast3.jpg";
-import FastFour from "./Features/Images/fast4.jpg";
-import FastFive from "./Features/Images/fast6.jpg";
-import FastSix from "./Features/Images/fast5.jpeg";
-import LocalOne from "./Features/Images/local1.jpeg";
-import LocalTwo from "./Features/Images/local2.jpeg";
-import LocalThree from "./Features/Images/local3.jpeg";
-// import LocalFour from "./Features/Images/local4.jpeg";
-import LocalFive from "./Features/Images/local5.jpg";
-import LocalSix from "./Features/Images/local6.jpg";
-import { FaOpencart } from "react-icons/fa";
 import Footer from "./Features/Footer";
-const foods = [
-  {
-    id: 1,
-    name: "Fast Food 1",
-    image: (
-      <img src={FastOne} alt="fast 1" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 2,
-    name: "Fast Food 2",
-    image: (
-      <img src={FastTwo} alt="fast 2" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 3,
-    name: "Fast Food 3",
-    image: (
-      <img src={FastThree} alt="fast 3" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 4,
-    name: "Fast Food 4",
-    image: (
-      <img src={FastFour} alt="fast 4" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 5,
-    name: "Fast Food 5",
-    image: (
-      <img src={FastFive} alt="fast 5" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 6,
-    name: "Fast Food 6",
-    image: (
-      <img src={FastSix} alt="fast 6" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 7,
-    name: "Fast Food 7",
-    image: (
-      <img src={LocalOne} alt="fast 7" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 8,
-    name: "Fast Food 8",
-    image: (
-      <img src={LocalTwo} alt="fast 8" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-  {
-    id: 9,
-    name: "Fast Food 9",
-    image: (
-      <img
-        src={LocalThree}
-        alt="fast 9"
-        className=" h-45 rounded-t-lg w-full"
-      />
-    ),
-    price: 1200,
-  },
-  {
-    id: 10,
-    name: "Fast Food10",
-    image: (
-      <img
-        src={LocalFive}
-        alt="fast 10"
-        className=" h-45 rounded-t-lg w-full"
-      />
-    ),
-    price: 1200,
-  },
-  {
-    id: 11,
-    name: "Fast Food 11",
-    image: (
-      <img src={LocalSix} alt="fast 11" className=" h-45 rounded-t-lg w-full" />
-    ),
-    price: 1200,
-  },
-];
+import { FaOpencart } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
+import { API_BASE_URL } from "../../utils/constants";
+import { MoonLoader } from "react-spinners";
 
 function FoodShop() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const companyName = searchParams.get("id");
+
+  const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [vendor, setVendor] = useState({});
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  const fetchRestaurantMeals = () => {
+    setLoading(true);
+    axios
+      .get(
+        `${API_BASE_URL}/deluxefood/get-vendor-by-name?companyName=${companyName}`
+      )
+      .then((res) => {
+        setVendor(res.data.vendor);
+        setFoods(res.data.foods);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("An error occurred:", err);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (companyName) fetchRestaurantMeals();
+  }, [companyName]);
+
+  const addToCart = (foodItem) => {
+    const updatedCart = [...cart];
+    const existingItem = updatedCart.find((item) => item.id === foodItem._id);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      updatedCart.push({
+        id: foodItem._id,
+        name: foodItem.name,
+        price: foodItem.price,
+        image: foodItem.picture,
+        quantity: 1,
+      });
+    }
+
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
   return (
-    <div>
+    <div className="overflow-hidden">
       <Navbar />
-      <TopSect />
-      <button className=" bg-red-700 ml-296 mb-10 rounded-lg p-2 flex items-center gap-2 text-lg text-white">
+
+      <button
+        onClick={() => navigate("/cart")}
+        className="fixed right-4 top-[70px] bg-red-700 rounded-lg p-2 flex items-center gap-2 text-lg text-white z-50 shadow-md"
+      >
         <FaOpencart />
-        <span className="bg-gradient-to-br from-white via-blue-200 to-white font-bold text-transparent bg-clip-text">
-          Food Cart
+        <span className="text-sm">
+          {cart.reduce((total, item) => total + item.quantity, 0)}
         </span>
       </button>
-      <section className="grid  items-center grid-cols-4 content-center justify-center justify-items-center justify-self-center self-center gap-5">
-        {foods.map((food) => (
-          <div key={food.name} className=" w-70 rounded-lg shadow-md flex flex-col   overflow-hidden mb-10  cursor-pointer">
-            <div className="w-70 h-30">{food.image}</div>
-            <div className="bg-white mt-10 flex items-center font-bold justify-between p-3">
-              <p className="text-red-500  text-lg">{food.name}</p>
-              <p>₦{food.price}</p>
-            </div>
+
+      <TopSect header={vendor.companyName} subheader={vendor.preference} />
+
+      <section className="grid mt-10 items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 px-6 min-h-[73vh]">
+        {loading ? (
+          <div className="col-span-4 w-full flex flex-col items-center justify-center text-red-500">
+            <MoonLoader />
+            <p className="mt-4 text-center">
+              Loading foods, this will only take a few seconds...
+            </p>
           </div>
-        ))}
+        ) : foods.length === 0 ? (
+          <div className="col-span-4 text-red-500 font-bold text-4xl text-center">
+            Sorry! No food available in this restaurant at the moment
+          </div>
+        ) : (
+          foods.map((food) => (
+            <div
+              key={food._id}
+              className="group w-full max-w-xs rounded-lg shadow-md overflow-hidden mb-10 cursor-pointer bg-white"
+            >
+              <div className="relative h-40">
+                <img
+                  src={food.picture || "/placeholder.png"}
+                  alt={food.name}
+                  className="w-full h-full object-cover rounded-t-lg"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-40 transition-opacity duration-500 z-10 rounded-t-lg" />
+                <button
+                  onClick={() => addToCart(food)}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-lg flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20"
+                >
+                  Add to Cart <IoCartOutline className="ml-2 text-xl" />
+                </button>
+              </div>
+              <div className="flex justify-between items-center p-3 font-bold">
+                <p className="text-red-500 truncate">{food.name}</p>
+                <p>
+                  {" "}
+                  {new Intl.NumberFormat("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(food.price)}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
       </section>
-      <Footer />
+
+      <Footer email={vendor.email} location={vendor.address} />
     </div>
   );
 }

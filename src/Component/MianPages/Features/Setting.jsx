@@ -4,44 +4,50 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import SetnSidebar from "./SetnSidebar";
 import { Outlet } from "react-router-dom";
 
-// import Sidebar from "../../AuthenticationPage/Sidebar";
-
 function Setting() {
   const navigate = useNavigate();
+
   return (
-    <>
-      <nav className="px-25 py-9 font-bold flex justify-between items-center content-center justify-items-center  text-white w-full bg-red-700">
+    <div className="flex flex-col md:h-screen">
+      {/* Top Navbar */}
+      <nav className="px-5 md:px-10 py-6 font-bold flex justify-between items-center text-white md:w-full bg-red-700">
         <h1 className="text-3xl">DeluxeFood</h1>
 
-        <div className="flex justify-between gap-30">
+        <div className="inline sm:flex gap-5 md:gap-20 lg:gap-60">
           <button
-          
             onClick={() => {
-              navigate("/auth/login")
+              navigate("/auth/login");
               localStorage.removeItem("isLoggedIn");
             }}
-            className="flex self-center text-white underline px-2 hover:cursor-pointer rounded-lg content-center"
+            className="text-white underline px-2 hover:cursor-pointer rounded-lg"
           >
             Logout
           </button>
           <button
             onClick={() => navigate("/")}
-            className="flex self-center text-white px-2 hover:cursor-pointer rounded-2xl p-1 text-2xl  font-bold hover:bg-red-500 content-center"
+            className="text-white px-2 hover:cursor-pointer rounded-2xl p-1 text-2xl font-bold hover:bg-red-500"
           >
             <IoMdArrowRoundBack />
           </button>
         </div>
       </nav>
-      <section className="grid grid-cols-5 items-center ">
-        <div className="bg-[url(/fast6.jpg)] bg-center relative items-center justify-items-center col-span-2 text-white">
-          <div className="absolute top-0 left-0 bg-black/60 h-full w-full "></div>
-          <SetnSidebar />
+
+      {/* Responsive Main Layout */}
+      <section className="flex flex-col md:grid grid-cols-5 md:flex-grow md:h-full md:overflow-hidden">
+        {/* Sidebar Section */}
+        <div className="relative col-span-2 bg-[url(/fast6.jpg)] bg-center text-white min-h-[200px] md:min-h-full">
+          <div className="absolute top-0 left-0 bg-black/60 h-full w-full z-0" />
+          <div className="relative z-10 md:h-full md:overflow-auto p-4">
+            <SetnSidebar />
+          </div>
         </div>
-        <div className="col-span-3 items-center justify-items-center">
+
+        {/* Scrollable Content Area */}
+        <div className="col-span-3 h-full items-center justify-items-center md:overflow-y-auto p-4 bg-white">
           <Outlet />
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

@@ -1,26 +1,34 @@
 import React from "react";
-// import rrrr from "./Images/fast-bite.jpg";
 
-function TopSect() {
+function TopSect({header, subheader}) {
   return (
-    <div className="bg-[url(/fast1.jpeg)] bg-center relative  items-center  text-center  flex flex-col  items-center rounded-b-lg pb-30 mb-20">
-      <div className="absolute top-0 left-0 bg-black/30 h-full w-full "></div>
-      <h1 className="text-5xl z-[10] font-bold text-white flex justify-self-center mt-15 w-170">
-        Delicious Food Delivered To Your Door
-      </h1>
-      <p className="text-xl z-[10] my-5 text-white">
-        Order from your favourite restaurant with just a few clicks
-      </p>
-      <form className="z-[10]">
-        <input
-          type="text"
-          placeholder="Search for your favourite food"
-          className="bg-red-500 bg-transparent-0.5 py-3 pl-5  w-100 mr-5 rounded-lg  font-bold text-white"
-        />
-        <button className="bg-red-700 p-3 text-white font-bold rounded-lg">
-          Find Food
-        </button>
-      </form>
+    <div className="relative bg-[url('/fast1.jpeg')] bg-cover bg-center bg-no-repeat bg-fixed flex flex-col justify-center items-center text-center min-h-[70vh] rounded-b-lg px-4 sm:px-10 py-6">
+      {/* Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
+
+      {/* Content */}
+      <div className="relative z-10 text-white max-w-3xl flex flex-col items-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+         {header}
+        </h1>
+        <p className="text-lg sm:text-xl mt-4">
+          {subheader}
+        </p>
+
+        {/* Centered Search Form */}
+        <div className="mt-6 flex justify-center w-full">
+          <form className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full max-w-xl">
+            <input
+              type="text"
+              placeholder="Search for your favorite food"
+              className="bg-white/20 border border-white/40 py-3 px-5 rounded-lg w-full sm:w-[300px] md:w-[400px] text-white placeholder-white focus:outline-none"
+            />
+            <button onClick={(e)=> e.preventDefault()} className="bg-red-700 hover:bg-red-600 transition p-3 text-white w-full sm:w-auto font-bold rounded-lg">
+              Find Food
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

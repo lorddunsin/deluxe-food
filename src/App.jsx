@@ -16,6 +16,8 @@ import LandingPage from "./Component/MianPages/LandingPage";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRout from "./Component/ProtectedRout";
 import EmailNotification from "./Component/AuthenticationPage/Pages/EmailNotification";
+import Cart from "./Component/MianPages/Cart";
+// import Carosel from "./Component/Carosel";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -25,6 +27,11 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/foodshop" element={<FoodShop />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/privacy" element={<Privacy />} />
+          <Route path="/about-us" element={<AboutUs />} />
+        
+        
 
         <Route path="/auth" element={<Auth />}>
           <Route index element={<Login />} />
@@ -43,12 +50,10 @@ function App() {
           }
         >
           <Route path="history" element={<History />} />
-          <Route path="about-us" element={<AboutUs />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="change-username" element={<ChangeUsername />} />
           <Route path="faq" element={<Faq />} />
           <Route path="customer-care" element={<CustomerCare />} />
-          <Route path="privacy" element={<Privacy />} />
         </Route>
       </Routes>
     </>
