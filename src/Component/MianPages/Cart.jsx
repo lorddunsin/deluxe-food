@@ -35,9 +35,22 @@ function Cart() {
   };
 
   const handleConfirm = () => {
-    // Optional: Send to backend or show toast
+    const newOrder = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      items: cartItems,
+      total: totalPrice,
+    };
+
+    const previousOrders =
+      JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const updatedOrders = [newOrder, ...previousOrders];
+
+    localStorage.setItem("orderHistory", JSON.stringify(updatedOrders));
     localStorage.removeItem("cart");
     setCartItems([]);
+
+    alert("✅ Order placed successfully!");
   };
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -49,12 +62,14 @@ function Cart() {
   return (
     <>
       <nav className="px-5 md:px-10 py-6 font-bold flex justify-between items-center text-white w-full bg-red-700">
-        <h1 className="text-xl sm:text-3xl mr-5">DeluxeFood</h1>
+        <h1 onClick={() => navigate("/")} className="text-xl sm:text-3xl mr-5">
+          DeluxeFood
+        </h1>
 
         <div className="inline md:flex gap-5 md:gap-20 lg:gap-60 justify-items-center justify-center items-center">
           <h1 className="flex justify-center items-center text-sm sm:text-base md:text-xl font-bold mb-5 text-center mt-4">
             Foods in Cart{" "}
-            <span className="bg-red-500  py-1 flex float-right ml-3 w-9 rounded-3xl text-center items-center justify-center">
+            <span className="bg-red-500 py-1 flex float-right ml-3 w-9 rounded-3xl text-center items-center justify-center">
               {cartItems.length}
             </span>
           </h1>
@@ -78,14 +93,12 @@ function Cart() {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 m-5">
-          {/* Cart Items */}
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {cartItems.map((item, index) => (
               <div
                 key={item.id}
                 className="flex flex-col relative items-center bg-red-200 shadow-md p-5 rounded-lg "
               >
-                {/* Remove Button */}
                 <span
                   onClick={() => removeItem(index)}
                   className="absolute top-2 right-2 hover:bg-red-500 hover:text-white p-1 text-2xl text-white bg-red-400 rounded-full cursor-pointer"
@@ -93,20 +106,17 @@ function Cart() {
                   <CiCircleRemove />
                 </span>
 
-                {/* Image */}
                 <img
                   src={item.image}
                   alt={item.name}
                   className="w-full h-36 object-cover rounded-lg mb-4"
                 />
 
-                {/* Name + Price */}
-                <div className="w-full text-center mb-2 flex itmes-center flex-col">
+                <div className="w-full text-center mb-2 flex flex-col items-center">
                   <p className="font-semibold text-base text-gray-800 truncate">
                     {item.name}
                   </p>
-                  <div className="flex items-center  self-center gap-2">
-                    {" "}
+                  <div className="flex items-center self-center gap-2">
                     <p className="text-red-600 font-medium text-sm">
                       {new Intl.NumberFormat("en-NG", {
                         style: "currency",
@@ -127,7 +137,7 @@ function Cart() {
                 </div>
 
                 {/* Quantity Controls */}
-                <div className="bg-red-500  px-4 py-2 flex items-center gap-3 rounded-lg text-white font-bold">
+                <div className="bg-red-500 px-4 py-2 flex items-center gap-3 rounded-lg text-white font-bold">
                   <CiCircleMinus
                     onClick={() => decrement(index)}
                     className="text-2xl cursor-pointer hover:bg-red-700 rounded-full"
@@ -142,21 +152,19 @@ function Cart() {
             ))}
           </div>
 
-          {/* Summary */}
           <section className="bg-red-100 p-5 rounded-lg h-fit sticky top-24">
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
             <div className="flex justify-between mb-2">
-              <p>Food Types:</p>
+              <p>Food Items:</p>
               <p className="font-bold">{cartItems.length}</p>
             </div>
             <div className="flex justify-between mb-2">
-              <p>Total Items:</p>
+              <p>Total Quantity:</p>
               <p className="font-bold">{totalItems}</p>
             </div>
             <div className="flex justify-between font-bold text-lg text-red-600">
               <p>Order Total:</p>
               <p>
-                {" "}
                 {new Intl.NumberFormat("en-NG", {
                   style: "currency",
                   currency: "NGN",
@@ -171,8 +179,11 @@ function Cart() {
             >
               Confirm Order
             </button>
-            <p className="underline text-red-500 text-center mt-4">
-              Order History
+            <p
+              onClick={() => navigate("/setting/history")}
+              className="underline text-red-500 text-center mt-4 cursor-pointer"
+            >
+              View Order History
             </p>
           </section>
         </div>

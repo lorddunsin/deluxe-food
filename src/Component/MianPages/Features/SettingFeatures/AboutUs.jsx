@@ -62,7 +62,7 @@ function AboutUs() {
       </p>
 
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate(-1)}
         className="  text-xl rounded-lg text-white mt-10 px-20 bg-red-500 "
       >
         Back

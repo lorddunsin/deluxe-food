@@ -9,7 +9,9 @@ function Navbar({ onRestClick, onHowClick }) {
   return (
     <nav className="px-6 md:px-10 lg:px-25 py-6 font-bold flex justify-between items-center text-white w-full bg-red-700 overflow-hidden">
       {/* Left Side: Logo */}
-      <h1 className="text-2xl md:text-3xl">DeluxeFood</h1>
+      <h1 onClick={() => navigate("/")} className="text-2xl md:text-3xl">
+        DeluxeFood
+      </h1>
 
       {/* Navigation Links (Hidden on mobile) */}
       <div className="hidden md:flex items-center gap-6 lg:gap-10">
@@ -48,7 +50,7 @@ function Navbar({ onRestClick, onHowClick }) {
             onClick={() => navigate("/")}
             className="text-white px-2 hover:cursor-pointer rounded-lg"
           >
-            Dashboard
+            Home
           </button>
         )}
       </div>

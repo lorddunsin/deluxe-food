@@ -4,21 +4,39 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import SetnSidebar from "./SetnSidebar";
 import { Outlet } from "react-router-dom";
 
+import axios from "axios";
+
 function Setting() {
+  const token = localStorage.getItem("loginToken");
   const navigate = useNavigate();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    axios
+      .post("https://deluxefood.onrender.com/api/deluxefood/logout-user", {
+        refreshToken: `${token}`,
+      })
+      .then((res) => {
+        console.log("success", res);
+        localStorage.removeItem("loginToken");
+        localStorage.removeItem("isLoggedIn");
+        navigate("/auth/login");
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
 
   return (
     <div className="flex flex-col md:h-screen">
       {/* Top Navbar */}
       <nav className="px-5 md:px-10 py-6 font-bold flex justify-between items-center text-white md:w-full bg-red-700">
-        <h1 className="text-3xl">DeluxeFood</h1>
+        <h1 onClick={() => navigate("/")} className="text-3xl">
+          DeluxeFood
+        </h1>
 
         <div className="inline sm:flex gap-5 md:gap-20 lg:gap-60">
           <button
-            onClick={() => {
-              navigate("/auth/login");
-              localStorage.removeItem("isLoggedIn");
-            }}
+            onClick={handleLogout}
             className="text-white underline px-2 hover:cursor-pointer rounded-lg"
           >
             Logout

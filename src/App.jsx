@@ -20,8 +20,6 @@ import Cart from "./Component/MianPages/Cart";
 // import Carosel from "./Component/Carosel";
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
     <>
       <Routes>
@@ -29,9 +27,7 @@ function App() {
         <Route path="/foodshop" element={<FoodShop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/privacy" element={<Privacy />} />
-          <Route path="/about-us" element={<AboutUs />} />
-        
-        
+        <Route path="/about-us" element={<AboutUs />} />
 
         <Route path="/auth" element={<Auth />}>
           <Route index element={<Login />} />

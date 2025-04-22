@@ -17,7 +17,7 @@ function SetnSidebar() {
           onClick={() => navigator("/setting/history")}
           className="hover:bg-red-600 rounded-lg hover:cursor-pointer z-[10]  items-center"
         >
-          History
+          Order History
         </div>
 
         <div

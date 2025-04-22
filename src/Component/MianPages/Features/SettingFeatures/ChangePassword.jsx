@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 
 function ChangePassword() {
+  const token = localStorage.getItem("loginToken");
   const [form, setForm] = useState({
     oldPassword: "",
     newPassword: "",
@@ -92,14 +93,30 @@ function ChangePassword() {
 
     // Submit request
     axios
-      .post(
+      .put(
         "https://deluxefood.onrender.com/api/deluxefood/change-password-user",
-        form
+        {
+          oldPassword: form.oldPassword,
+          newPassword: form.newPassword,
+          confirmNewPassword: form.confirmPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       .then((res) => {
         console.log("Success:", res);
+        console.log(res.data);
+        alert("Password changed successfully!");
+        setForm({
+          oldPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
         setLoading(false);
-        // Optional: navigate("/auth/login");
+         navigate("/");
       })
       .catch((err) => {
         console.log("Error:", err.response?.data?.message);
