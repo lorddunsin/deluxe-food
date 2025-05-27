@@ -17,6 +17,7 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRout from "./Component/ProtectedRout";
 import EmailNotification from "./Component/AuthenticationPage/Pages/EmailNotification";
 import Cart from "./Component/MianPages/Cart";
+import SearchResult from "./Component/MianPages/SearchResult";
 // import Carosel from "./Component/Carosel";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/search" element={<SearchResult />} />
 
         <Route path="/auth" element={<Auth />}>
           <Route index element={<Login />} />

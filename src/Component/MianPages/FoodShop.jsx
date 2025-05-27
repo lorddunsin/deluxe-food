@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import TopSect from "./Features/TopSect";
@@ -24,15 +22,15 @@ function FoodShop() {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  
   useEffect(() => {
     if (companyName) {
       setLoading(true);
       axios
         .get(
-          `${API_BASE_URL}/deluxefood/get-vendor-by-name?companyName=${companyName}`
+          `${API_BASE_URL}/deluxefood/search-vendor-by-company-name?companyName=${companyName}`
         )
         .then((res) => {
+          console.log(res.data);
           setVendor(res.data.vendor);
           setFoods(res.data.foods);
           setLoading(false);
@@ -44,7 +42,6 @@ function FoodShop() {
     }
   }, [companyName]);
 
-  
   const addToCart = (foodItem) => {
     const updatedCart = [...cart];
     const existingItem = updatedCart.find((item) => item.id === foodItem._id);
@@ -69,7 +66,6 @@ function FoodShop() {
     <div className="overflow-hidden">
       <Navbar />
 
-      
       <button
         onClick={() => navigate("/cart")}
         className="fixed right-4 top-[70px] bg-red-700 border-1 border-red-500 rounded-lg p-2 flex items-center gap-2 text-lg text-white z-50 shadow-md"
@@ -80,10 +76,8 @@ function FoodShop() {
         </span>
       </button>
 
-      
       <TopSect header={vendor.companyName} subheader={vendor.preference} />
 
-      
       <section className="grid mt-10 items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 px-6 min-h-[73vh]">
         {loading ? (
           <div className="col-span-4 w-full flex flex-col items-center justify-center text-red-500">
@@ -113,11 +107,11 @@ function FoodShop() {
                     onClick={() => addToCart(food)}
                     className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold ${
                       inCart
-                        ? "bg-white text-red-700  text-red-700"
+                        ? "bg-white text-red-700  text-red-700 cursor-not-allowed"
                         : "bg-red-600 text-white hover:bg-red-700"
                     } text-sm py-2 px-4 rounded-lg flex items-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20`}
                   >
-                    {inCart ? "Already in Cart" : "Add to Cart"}{" "}
+                    {inCart ? "Added to Cart" : "Add to Cart"}{" "}
                     <IoCartOutline className="ml-2 text-xl" />
                   </button>
                 </div>
